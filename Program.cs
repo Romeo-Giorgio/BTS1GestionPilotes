@@ -1,4 +1,61 @@
 ﻿// See https://aka.ms/new-console-template for more information
+
+Console.WriteLine("Préparation de Mission");
+// Saisie pilote
+Console.WriteLine("Saisie pilote");
+Console.WriteLine("Saisie id pilote");
+int idPilote = int.Parse(Console.ReadLine() ?? "0");
+Console.WriteLine("Saisie nom pilote");
+string nomPilote = Console.ReadLine() ?? "";
+Console.WriteLine("Saisie prénom pilote");
+string prenomPilote = Console.ReadLine() ?? "";
+Pilote pilote1 = new Pilote(idPilote, nomPilote, prenomPilote);
+
+// Engagement pilote
+Console.WriteLine("Engagement du pilote");
+Console.WriteLine("Saisie callsign pilote");
+string callsignPilote = Console.ReadLine() ?? "";
+Console.WriteLine("Saisie grade");
+string gradePilote = Console.ReadLine() ?? "";
+Console.WriteLine("Saisie heures de vol");
+int hdvPilote = int.Parse(Console.ReadLine() ?? "0");
+pilote1.EngagerPilote(callsignPilote, gradePilote, hdvPilote);
+
+// Saisie avion
+Console.WriteLine("Saisie avion");
+Console.WriteLine("Saisie callsign avion");
+string callsignAvion = Console.ReadLine() ?? "";
+Console.WriteLine("Saisie type avion");
+string typeAvion = Console.ReadLine() ?? "";
+Avion avion1 = new Avion(callsignAvion, typeAvion);
+
+// Tentative de vol
+avion1.Voler();
+
+// Préparation de l'avion
+Console.WriteLine("Préparation de l'avion");
+Console.WriteLine("Saisie quantité carburant");
+int carburantEmbarque = int.Parse(Console.ReadLine() ?? "0");
+Console.WriteLine("L'avion embarque-t-il un géopod ? o/n");
+bool geopodEmbarque = Console.ReadLine() == "o";
+avion1.PrepaperAvion(carburantEmbarque, geopodEmbarque, pilote1);
+
+// Tentative de vol
+avion1.Voler();
+
+// Fin de mission
+Console.WriteLine("Fin de mission");
+Console.WriteLine("Saisir carburant consomme");
+int carburantConsomme = int.Parse(Console.ReadLine() ?? "0");
+Console.WriteLine("Saisir durée mission");
+int dureeMission = int.Parse(Console.ReadLine() ?? "0");
+avion1.Atterrir(carburantConsomme, dureeMission);   
+
+
+
+
+
+Console.Read();
 public class Pilote
 {
     private int _id;
@@ -122,6 +179,7 @@ public class Avion
         if(this._emportCarburant>4700 && this._pilote != null)
         {
             ActionnerLevierTrain("UP");
+            Console.WriteLine("Vol en cours. Le train est rentré.");
         }
         else
         {
@@ -135,5 +193,7 @@ public class Avion
         this._pilote.RevenirDeMission(dureeMission);
     }
 }
+
+
 
 
