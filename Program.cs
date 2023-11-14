@@ -45,6 +45,20 @@ public class Pilote
         this._nom = nom;
         this._prenom = prenom;
     }
+    private int CalculNouvellesHDV(int heuresSupplementaire)
+    {
+        return this._heuresDeVol += heuresSupplementaire;
+    }
+    public void EngagerPilote(string callsign, string grade, int heuresDeVol)
+    {
+        this._callsign = callsign;
+        this._grade = grade;
+        this._heuresDeVol = heuresDeVol;
+    }
+    public void RevenirDeMission(int duree)
+    {
+        this._heuresDeVol = CalculNouvellesHDV(duree);
+    }
 
 }
 
@@ -88,8 +102,38 @@ public class Avion
     {
         this._callsign = callsign;
         this._type = type;
+        this._trainSorti = false;
     }
-       
+    
+    public void PrepaperAvion(int masseCarburant, bool geopodPresent, Pilote piloteAffecte)
+    {
+        this._emportCarburant = masseCarburant;
+        this._emportGeopod = geopodPresent;
+        this._pilote = piloteAffecte;
+    }
+
+    public void ActionnerLevierTrain(string statutTrain)
+    {
+        this._trainSorti = statutTrain == "DOWN";
+    }
+
+    public void Voler()
+    {
+        if(this._emportCarburant>4700 && this._pilote != null)
+        {
+            ActionnerLevierTrain("UP");
+        }
+        else
+        {
+            Console.WriteLine("L'avion ne peut pas voler.");
+        }
+    }
+    public void Atterrir(int carburantConsomme, int dureeMission)
+    {
+        ActionnerLevierTrain("DOWN");
+        this._emportCarburant -= carburantConsomme;
+        this._pilote.RevenirDeMission(dureeMission);
+    }
 }
 
 
